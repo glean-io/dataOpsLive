@@ -5,7 +5,7 @@ name: Monthly Recurring Revenue
 source:
   connectionName: demo_snowflake
   physicalName: mrr
-  schema: prod
+  schema: dev_dse
 cols:
   - id: date_month
     type: datetime
@@ -49,7 +49,7 @@ cols:
     name: Change Category
   - id: renewal_amount
     type: attribute
-    physicalName: renewal_amount
+    physicalName: renewal_amount_v2
     name: renewal_amount
   - id: customer_id
     type: attribute
@@ -83,7 +83,7 @@ cols:
       fixedDecimals: 0
       formatAsDollars: true
     aggregate: sum
-    physicalName: renewal_amount
+    physicalName: renewal_amount_v2
   - id: customers
     type: metric
     name: customers
