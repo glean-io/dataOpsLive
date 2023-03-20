@@ -1,0 +1,43 @@
+name: glean-preview
+on: [pull_request]
+permissions: write-all
+jobs:
+  create-glean-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: generate-preview
+        run: |
+          PULL_REQUEST_TITLE="${{ github.event.pull_request.title }}"
+          if [ echo $PULL_REQUEST_TITLE | grep schema=]
+          then
+            export DBT_SCHEMA=`echo $PULL_REQUEST_TITLE | sed 's/.*\[schema=\(.*\)\]/\1/'`
+          else
+            export DBT_SCHEMA=prod
+          fi
+
+          pip install glean-cli
+          cd glean/
+          glean preview . | tee output.txt
+          grep -q Details output.txt
+          if [ $? -eq 0 ]; then
+            RESULT=`grep Details output.txt | sed 's/Details/Glean preview build succeeded/'`
+          else
+            RESULT=`echo "Glean Preview Build failed. See the GitHub action logs for more details."`
+          fi
+          echo ::set-output name=result::$RESULT
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '${{ steps.generate-preview.outputs.result }}'
+            })
+      - id: set-appropriate-exit-code
+        run: echo ${{ steps.generate-preview.outputs.result }} | grep succeeded
+    env: # Or as an environment variable
+      GLEAN_PROJECT_ID: ${{ secrets.GLEAN_PROJECT_ID_PROD }}
+      GLEAN_ACCESS_KEY_ID: ${{ secrets.GLEAN_ACCESS_KEY_ID_PROD }}
+      GLEAN_SECRET_ACCESS_KEY_TOKEN: ${{ secrets.GLEAN_SECRET_ACCESS_KEY_TOKEN_PROD }}
