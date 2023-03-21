@@ -1,0 +1,42 @@
+glean: "1.0"
+type: saved_view
+model: m:4b9c282f-7860-3be0-8087-83116ca15724
+name: MRR by Month
+data:
+  x:
+    columnId: date_month
+    granularity: month
+  y:
+    columnId: mrr_change
+  breakout:
+    columnId: change_category
+    groups:
+      - key: churn
+        index: 0
+      - key: new
+        index: 1
+      - key: upgrade
+        index: 2
+      - key: downgrade
+        index: 3
+      - key: reactivation
+        index: 4
+  filters:
+    - columnId: date_month
+      range:
+        - '2018-01-01'
+        - '2019-12-01'
+  sort:
+    - columnId: date_month
+      order: asc
+  limit: 10000
+visualization:
+  chartType: table
+  showOther: true
+  tableVisualization:
+    - columnId: mrr_change
+      calculation: columnPercentTotal
+      heightPixels: 5
+      labelPlacement: floating
+      maxWidthPixels: 100
+      type: bar
