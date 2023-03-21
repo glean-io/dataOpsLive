@@ -1,0 +1,103 @@
+glean: '1.0'
+type: dashboard
+name: 📒 ACME co. revenue dashboard
+globalFilters: []
+sections:
+- filters:
+  - dataModel: ../models/monthly_recurring_revenue.yml
+    columnId: date_month
+    range:
+    - '2019-11-01'
+    - '2019-12-01'
+  rows:
+  - blocks:
+    - type: markdown
+      text: |
+        ## Last Month
+      width: 12
+  - blocks:
+    - type: metric
+      dataModel: ../models/monthly_recurring_revenue.yml
+      dataModelMetricId: customers
+      filters: []
+      label: active customers
+      ignoreDashboardFilters: false
+      width: 3
+    - type: metric
+      dataModel: ../models/monthly_recurring_revenue.yml
+      dataModelMetricId: arpu
+      filters:
+      - columnId: date_month
+        range:
+        - '2019-11-01'
+        - '2019-12-01'
+      label: ''
+      ignoreDashboardFilters: false
+      width: 3
+    - type: metric
+      dataModel: ../models/monthly_recurring_revenue.yml
+      dataModelMetricId: mrr
+      filters: []
+      label: MRR
+      ignoreDashboardFilters: false
+      width: 3
+    - type: metric
+      dataModel: ../models/monthly_recurring_revenue.yml
+      dataModelMetricId: mrr_change
+      filters: []
+      label: mrr change last month
+      ignoreDashboardFilters: false
+      width: 3
+    height: 2
+- filters: []
+  rows:
+  - blocks:
+    - type: markdown
+      text: '## Number of Customers '
+      width: 12
+  - blocks:
+    - type: savedView
+      savedView: ../saved_views/number_of_customers.yml
+      legendPosition: none
+      ignoreDashboardFilters: false
+      width: 6
+    - type: savedView
+      savedView: ../saved_views/net_new_customers.yml
+      legendPosition: none
+      ignoreDashboardFilters: false
+      width: 6
+    height: 6
+  - blocks:
+    - type: savedView
+      savedView: ../saved_views/new_and_churned_customer_revenue.yml
+      legendPosition: none
+      ignoreDashboardFilters: false
+      width: 6
+    - type: empty
+      width: 6
+    height: 6
+  - blocks:
+    - type: markdown
+      text: '## Revenue'
+      width: 12
+  - blocks:
+    - type: savedView
+      savedView: ../saved_views/monthly_recurring_revenue.yml
+      legendPosition: none
+      ignoreDashboardFilters: false
+      width: 6
+    - type: savedView
+      savedView: ../saved_views/monthly_growth_rate.yml
+      legendPosition: top
+      ignoreDashboardFilters: false
+      width: 6
+    height: 6
+  - blocks:
+    - type: savedView
+      savedView: ../saved_views/new_and_churned_customers.yml
+      legendPosition: top
+      ignoreDashboardFilters: false
+      width: 6
+    - type: empty
+      width: 6
+    height: 7
