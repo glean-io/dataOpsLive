@@ -5,7 +5,7 @@ name: Monthly Recurring Revenue
 source:
   connectionName: demo_snowflake
   physicalName: mrr
-  schema: ${DBT_SCHEMA}
+  schema: prod
 cols:
   - id: date_month
     type: datetime
