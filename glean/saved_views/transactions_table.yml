@@ -1,0 +1,18 @@
+glean: "1.0"
+type: saved_view
+model: m:4b9c282f-7860-3be0-8087-83116ca15724
+name: Saved view based on Monthly Recurring Revenue
+data:
+  x:
+    columnId: date_month
+    granularity: month
+  y:
+    columnId: transactions
+  filters: []
+  sort:
+    - columnId: date_month
+      order: asc
+  limit: 10000
+visualization:
+  chartType: table
+  showOther: true
