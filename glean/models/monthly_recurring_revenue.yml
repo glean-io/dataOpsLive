@@ -82,7 +82,7 @@ cols:
     formattingOptions:
       fixedDecimals: 0
       formatAsDollars: true
-    sql: renewal_amount * 1000
+    sql: sum(renewal_amount)*1000
   - id: customers
     type: metric
     name: customers
