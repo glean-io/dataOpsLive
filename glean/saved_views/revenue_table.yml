@@ -1,0 +1,42 @@
+glean: "1.0"
+type: saved_view
+model: m:4b9c282f-7860-3be0-8087-83116ca15724
+name: Revenue table
+data:
+  x:
+    columnId: date_month
+    granularity: month
+  y:
+    - columnId: transactions
+    - columnId: revenue
+  breakout:
+    columnId: change_category
+    groups:
+      - key: churn
+        index: 0
+      - key: new
+        index: 1
+      - key: upgrade
+        index: 2
+      - key: downgrade
+        index: 3
+      - key: reactivation
+        index: 4
+  filters:
+    - columnId: change_category
+      excludeValues:
+        - null
+  sort:
+    - columnId: date_month
+      order: asc
+  limit: 10000
+visualization:
+  chartType: table
+  showOther: true
+  tableVisualization:
+    - columnId: transactions
+      calculation: columnPercentTotal
+      type: bar
+      maxWidthPixels: 100
+      heightPixels: 5
+      labelPlacement: right
