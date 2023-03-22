@@ -1,0 +1,43 @@
+glean: "1.0"
+type: saved_view
+model: m:4b9c282f-7860-3be0-8087-83116ca15724
+name: Saved view based on Monthly Recurring Revenue
+data:
+  x:
+    columnId: date_month
+    granularity: month
+  y:
+    columnId: transactions
+  breakout:
+    columnId: change_category
+    groups:
+      - key: downgrade
+        index: 0
+      - key: upgrade
+        index: 1
+      - key: reactivation
+        index: 2
+      - key: new
+        index: 3
+      - key: churn
+        index: 4
+  filters:
+    - columnId: change_category
+      excludeValues:
+        - null
+  sort:
+    - columnId: date_month
+      order: asc
+    - columnId: change_category
+      order: asc
+  limit: 10000
+visualization:
+  chartType: table
+  showOther: true
+  tableVisualization:
+    - columnId: transactions
+      calculation: columnPercentTotal
+      type: bar
+      maxWidthPixels: 100
+      heightPixels: 5
+      labelPlacement: right
