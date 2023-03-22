@@ -5,7 +5,7 @@ name: Monthly Recurring Revenue
 source:
   connectionName: demo_snowflake
   physicalName: mrr
-  schema: prod
+  schema: ${DBT_SCHEMA}
 cols:
   - id: date_month
     type: datetime
@@ -49,7 +49,7 @@ cols:
     name: Change Category
   - id: renewal_amount
     type: attribute
-    physicalName: renewal_amount
+    physicalName: renewal_amount_raw
     name: renewal_amount
   - id: customer_id
     type: attribute
@@ -82,7 +82,7 @@ cols:
     formattingOptions:
       fixedDecimals: 0
       formatAsDollars: true
-    sql: SUM(renewal_amount) * 1000
+    sql: SUM(renewal_amount_raw)
   - id: customers
     type: metric
     name: customers
