@@ -10,7 +10,7 @@ cols:
   - id: date_month
     type: datetime
     physicalName: date_month
-    name: date_month
+    name: Month
     primaryDate: true
     aggregationOptions:
       minGranularity: month
