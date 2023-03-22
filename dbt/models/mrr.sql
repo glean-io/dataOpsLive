@@ -50,7 +50,7 @@ final as (
             when mrr_change < 0 then 'downgrade'
         end as change_category,
 
-        least(mrr, previous_month_mrr) as renewal_amount
+        least(mrr, previous_month_mrr) * 1000 as renewal_amount_v2
 
     from mrr_with_changes
 
